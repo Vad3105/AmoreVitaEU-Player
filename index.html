@@ -1,23 +1,609 @@
 <!doctype html>
 <html lang="ru">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AmoreVitaEU — Подкасты о любви</title>
+
 <style>
-:root{color-scheme:dark;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:radial-gradient(ellipse at 20% 10%,#49253d 0,transparent 42%),linear-gradient(145deg,#110f1e,#251626 75%,#100e1a);color:#fff;padding:24px}.card{width:min(100%,470px);padding:28px;border:1px solid #ffffff25;border-radius:28px;background:#ffffff0d;box-shadow:0 24px 70px #0007;backdrop-filter:blur(18px)}.brand{text-align:center;letter-spacing:.09em;color:#f9c6d5;font-weight:800;font-size:1.4rem}.tag{text-align:center;color:#cbb8c7;font-size:.8rem;margin:6px 0 24px}.cover{aspect-ratio:1.35;border-radius:20px;display:flex;align-items:center;justify-content:center;flex-direction:column;background:radial-gradient(circle at 50% 30%,#d36f8d,#7e355c 45%,#2d1b3c);box-shadow:inset 0 0 60px #0004}.heart{font-size:76px;filter:drop-shadow(0 8px 15px #0005)}.cover span{font-size:.85rem;letter-spacing:.22em;text-transform:uppercase}.eyebrow{margin:25px 0 5px;color:#f3a7bf;font-size:.75rem;text-transform:uppercase;letter-spacing:.14em}h1{font-size:1.45rem;line-height:1.3;margin:0 0 8px}.desc{color:#cbbbc8;font-size:.92rem;line-height:1.5;margin:0 0 24px}.progress{width:100%;accent-color:#f1a2bd;cursor:pointer}.times{display:flex;justify-content:space-between;color:#b7a8b8;font-size:.78rem}.controls{display:flex;align-items:center;justify-content:center;gap:18px;margin:12px 0 18px}button{border:0;color:white;background:none;cursor:pointer;font-size:1.2rem}#play{width:66px;height:66px;border-radius:50%;background:linear-gradient(135deg,#f3a2bd,#b8537f);font-size:1.65rem;box-shadow:0 8px 22px #a63d7566}button:focus-visible,input:focus-visible{outline:2px solid white;outline-offset:4px}.bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#cbbbc8;font-size:.8rem}.bottom input{width:105px;accent-color:#f1a2bd}.status{min-height:1.4em;color:#ffc1c1;font-size:.78rem;margin-top:15px;text-align:center}.foot{text-align:center;margin-top:15px;color:#b9a3b5;font-size:.75rem}
+:root {
+  color-scheme: dark;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(ellipse at 20% 10%, #49253d 0, transparent 42%),
+    linear-gradient(145deg, #110f1e, #251626 75%, #100e1a);
+  color: #fff;
+  padding: 24px;
+}
+
+.card {
+  width: min(100%, 470px);
+  padding: 28px;
+  border: 1px solid #ffffff25;
+  border-radius: 28px;
+  background: #ffffff0d;
+  box-shadow: 0 24px 70px #0007;
+  backdrop-filter: blur(18px);
+}
+
+.brand {
+  text-align: center;
+  letter-spacing: .09em;
+  color: #f9c6d5;
+  font-weight: 800;
+  font-size: 1.4rem;
+}
+
+.tag {
+  text-align: center;
+  color: #cbb8c7;
+  font-size: .8rem;
+  margin: 6px 0 24px;
+}
+
+.cover {
+  aspect-ratio: 1.35;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: radial-gradient(
+    circle at 50% 30%,
+    #d36f8d,
+    #7e355c 45%,
+    #2d1b3c
+  );
+  box-shadow: inset 0 0 60px #0004;
+}
+
+.heart {
+  font-size: 76px;
+  filter: drop-shadow(0 8px 15px #0005);
+}
+
+.cover span {
+  font-size: .85rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  margin: 25px 0 5px;
+  color: #f3a7bf;
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+}
+
+h1 {
+  font-size: 1.45rem;
+  line-height: 1.3;
+  margin: 0 0 8px;
+}
+
+.desc {
+  color: #cbbbc8;
+  font-size: .92rem;
+  line-height: 1.5;
+  margin: 0 0 24px;
+}
+
+.progress {
+  width: 100%;
+  accent-color: #f1a2bd;
+  cursor: pointer;
+}
+
+.times {
+  display: flex;
+  justify-content: space-between;
+  color: #b7a8b8;
+  font-size: .78rem;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 12px 0 18px;
+}
+
+button {
+  border: 0;
+  color: white;
+  background: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+button:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+#play {
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f3a2bd, #b8537f);
+  font-size: 1.65rem;
+  box-shadow: 0 8px 22px #a63d7566;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 4px;
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  color: #cbbbc8;
+  font-size: .8rem;
+}
+
+.bottom input {
+  width: 105px;
+  accent-color: #f1a2bd;
+}
+
+.status {
+  min-height: 1.4em;
+  color: #ffc1c1;
+  font-size: .78rem;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.foot {
+  text-align: center;
+  margin-top: 15px;
+  color: #b9a3b5;
+  font-size: .75rem;
+}
+
+.playlist {
+  margin-top: 22px;
+  border-top: 1px solid #ffffff25;
+  padding-top: 16px;
+}
+
+.playlist-title {
+  color: #f3a7bf;
+  font-size: .85rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  background: #ffffff0d;
+  text-align: left;
+  font-size: .85rem;
+  overflow-wrap: anywhere;
+}
+
+.track:hover {
+  background: #ffffff1c;
+}
+
+.track.active {
+  background: #b8537f55;
+  border: 1px solid #f3a2bd77;
+}
+
+.track-number {
+  color: #f3a7bf;
+  min-width: 22px;
+}
 </style>
 </head>
-<body><main class="card"><div class="brand">AmoreVitaEU</div><div class="tag">О любви, отношениях и совместимости</div><div class="cover" aria-label="Обложка подкаста"><div class="heart">♥</div><span>Подкасты о любви</span></div><p class="eyebrow">Аудиоподкаст</p><h1>Психология любви и совместимости</h1><p class="desc">Разговор о чувствах, отношениях и взаимопонимании.</p><audio id="audio" preload="metadata" controlsList="nodownload" disablePictureInPicture></audio><input class="progress" id="seek" aria-label="Перемотка" type="range" min="0" max="1000" value="0"><div class="times"><span id="current">0:00</span><span id="duration">0:00</span></div><div class="controls"><button id="back" aria-label="Назад на 15 секунд">↶ 15</button><button id="play" aria-label="Воспроизвести">▶</button><button id="forward" aria-label="Вперёд на 15 секунд">15 ↷</button></div><div class="bottom"><label for="volume">Громкость</label><input id="volume" aria-label="Громкость" type="range" min="0" max="1" step="0.05" value="1"><span id="speed">1×</span><button id="speedBtn" aria-label="Скорость воспроизведения">Скорость</button></div><div class="status" id="status"></div><div class="foot">© AmoreVitaEU · Слушайте с удовольствием</div></main>
+
+<body>
+
+<main class="card">
+
+  <div class="brand">AmoreVitaEU</div>
+
+  <div class="tag">
+    О любви, отношениях и совместимости
+  </div>
+
+  <div class="cover" aria-label="Обложка подкаста">
+    <div class="heart">♥</div>
+    <span>Подкасты о любви</span>
+  </div>
+
+  <p class="eyebrow">Аудиоподкаст</p>
+
+  <h1 id="trackTitle">
+    Загрузка подкастов...
+  </h1>
+
+  <p class="desc">
+    Разговор о чувствах, отношениях и взаимопонимании.
+  </p>
+
+  <audio
+    id="audio"
+    preload="metadata"
+    controlsList="nodownload"
+    disablePictureInPicture>
+  </audio>
+
+  <input
+    class="progress"
+    id="seek"
+    aria-label="Перемотка"
+    type="range"
+    min="0"
+    max="1000"
+    value="0">
+
+  <div class="times">
+    <span id="current">0:00</span>
+    <span id="duration">0:00</span>
+  </div>
+
+  <div class="controls">
+
+    <button id="previous" aria-label="Предыдущий подкаст">
+      ⏮
+    </button>
+
+    <button id="back" aria-label="Назад на 15 секунд">
+      ↶ 15
+    </button>
+
+    <button id="play" aria-label="Воспроизвести">
+      ▶
+    </button>
+
+    <button id="forward" aria-label="Вперёд на 15 секунд">
+      15 ↷
+    </button>
+
+    <button id="next" aria-label="Следующий подкаст">
+      ⏭
+    </button>
+
+  </div>
+
+  <div class="bottom">
+
+    <label for="volume">Громкость</label>
+
+    <input
+      id="volume"
+      aria-label="Громкость"
+      type="range"
+      min="0"
+      max="1"
+      step="0.05"
+      value="1">
+
+    <span id="speed">1×</span>
+
+    <button id="speedBtn" aria-label="Скорость воспроизведения">
+      Скорость
+    </button>
+
+  </div>
+
+  <div class="status" id="status"></div>
+
+  <div class="playlist">
+
+    <div class="playlist-title">
+      🎧 Все подкасты
+    </div>
+
+    <div id="trackList">
+      Загружаем список...
+    </div>
+
+  </div>
+
+  <div class="foot">
+    © AmoreVitaEU · Слушайте с удовольствием
+  </div>
+
+</main>
+
 <script>
-// После настройки сервера укажите адрес потокового endpoint здесь.
-// Пример: const STREAM_URL = '/api/audio/first-episode';
-const STREAM_URL = '';
-const audio=document.getElementById('audio'),play=document.getElementById('play'),seek=document.getElementById('seek'),status=document.getElementById('status');
-if(STREAM_URL){audio.src=STREAM_URL;}else{status.textContent='Аудиозапись будет доступна после подключения сервера.';}
-const fmt=s=>Number.isFinite(s)?`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`:'0:00';
-function update(){document.getElementById('current').textContent=fmt(audio.currentTime);document.getElementById('duration').textContent=fmt(audio.duration);seek.value=Number.isFinite(audio.duration)&&audio.duration>0?Math.round(audio.currentTime/audio.duration*1000):0;play.textContent=audio.paused?'▶':'❚❚';play.setAttribute('aria-label',audio.paused?'Воспроизвести':'Пауза');}
-play.onclick=async()=>{if(!STREAM_URL)return;if(audio.paused){try{await audio.play();status.textContent='';}catch{status.textContent='Не удалось воспроизвести запись.';}}else audio.pause();};
-document.getElementById('back').onclick=()=>audio.currentTime=Math.max(0,audio.currentTime-15);document.getElementById('forward').onclick=()=>audio.currentTime=Math.min(audio.duration||Infinity,audio.currentTime+15);seek.oninput=()=>{if(Number.isFinite(audio.duration))audio.currentTime=seek.value/1000*audio.duration;};document.getElementById('volume').oninput=e=>audio.volume=Number(e.target.value);
-const speeds=[1,1.25,1.5,1.75,2,.75];let speedIndex=0;document.getElementById('speedBtn').onclick=()=>{speedIndex=(speedIndex+1)%speeds.length;audio.playbackRate=speeds[speedIndex];document.getElementById('speed').textContent=speeds[speedIndex]+'×';};
-['timeupdate','loadedmetadata','durationchange','play','pause','ended'].forEach(event=>audio.addEventListener(event,update));audio.addEventListener('error',()=>status.textContent='Ошибка загрузки аудио.');
-</script></body></html>
+"use strict";
+
+/*
+  AmoreVitaEU Audio Player
+
+  Сервер предоставляет:
+  GET /api/tracks
+  GET /api/stream/имя-файла.mp3
+*/
+
+const API_BASE =
+  "http://p7xuudvh7dm46uoo5cixuxzw.31.70.78.94.sslip.io";
+
+const audio = document.getElementById("audio");
+const play = document.getElementById("play");
+const seek = document.getElementById("seek");
+const status = document.getElementById("status");
+const trackTitle = document.getElementById("trackTitle");
+const trackList = document.getElementById("trackList");
+const previous = document.getElementById("previous");
+const next = document.getElementById("next");
+
+let tracks = [];
+let currentIndex = 0;
+
+const fmt = seconds => {
+  if (!Number.isFinite(seconds)) return "0:00";
+
+  return (
+    Math.floor(seconds / 60) +
+    ":" +
+    String(Math.floor(seconds % 60)).padStart(2, "0")
+  );
+};
+
+function updateButtons() {
+  const hasTracks = tracks.length > 0;
+
+  play.disabled = !hasTracks;
+  previous.disabled = !hasTracks || currentIndex === 0;
+  next.disabled = !hasTracks || currentIndex >= tracks.length - 1;
+}
+
+function updatePlayer() {
+  document.getElementById("current").textContent =
+    fmt(audio.currentTime);
+
+  document.getElementById("duration").textContent =
+    fmt(audio.duration);
+
+  seek.value =
+    Number.isFinite(audio.duration) && audio.duration > 0
+      ? Math.round(audio.currentTime / audio.duration * 1000)
+      : 0;
+
+  play.textContent = audio.paused ? "▶" : "❚❚";
+
+  play.setAttribute(
+    "aria-label",
+    audio.paused ? "Воспроизвести" : "Пауза"
+  );
+}
+
+function renderPlaylist() {
+  trackList.replaceChildren();
+
+  tracks.forEach((track, index) => {
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.className =
+      "track" + (index === currentIndex ? " active" : "");
+
+    const number = document.createElement("span");
+    number.className = "track-number";
+    number.textContent = String(index + 1) + ".";
+
+    const title = document.createElement("span");
+    title.textContent = track.title;
+
+    button.append(number, title);
+
+    button.addEventListener("click", () => {
+      selectTrack(index, true);
+    });
+
+    trackList.appendChild(button);
+  });
+}
+
+async function startPlayback() {
+  try {
+    await audio.play();
+    status.textContent = "";
+  } catch (error) {
+    if (error.name !== "AbortError") {
+      status.textContent =
+        "Не удалось начать воспроизведение.";
+    }
+  }
+}
+
+function selectTrack(index, autoplay = false) {
+  if (index < 0 || index >= tracks.length) return;
+
+  currentIndex = index;
+
+  const track = tracks[currentIndex];
+
+  trackTitle.textContent = track.title;
+
+  audio.src = new URL(track.url, API_BASE).href;
+
+  audio.load();
+
+  seek.value = 0;
+
+  document.getElementById("current").textContent = "0:00";
+  document.getElementById("duration").textContent = "0:00";
+
+  status.textContent = "";
+
+  renderPlaylist();
+  updateButtons();
+  updatePlayer();
+
+  if (autoplay) {
+    startPlayback();
+  }
+}
+
+async function loadTracks() {
+  status.textContent = "Загружаем список подкастов...";
+
+  try {
+    const response = await fetch(
+      API_BASE + "/api/tracks",
+      { cache: "no-store" }
+    );
+
+    if (!response.ok) {
+      throw new Error("Ошибка API: " + response.status);
+    }
+
+    const data = await response.json();
+
+    if (!Array.isArray(data)) {
+      throw new Error("Неверный формат списка");
+    }
+
+    tracks = data.filter(track =>
+      track &&
+      typeof track.title === "string" &&
+      typeof track.url === "string" &&
+      track.url.startsWith("/api/stream/")
+    );
+
+    if (tracks.length === 0) {
+      trackTitle.textContent = "Подкасты пока не добавлены";
+      trackList.textContent = "Аудиозаписей пока нет.";
+      status.textContent = "";
+      updateButtons();
+      return;
+    }
+
+    selectTrack(0, false);
+
+  } catch (error) {
+    console.error("AmoreVitaEU API:", error);
+
+    trackTitle.textContent = "Подкасты временно недоступны";
+
+    trackList.textContent =
+      "Не удалось получить список подкастов.";
+
+    status.textContent =
+      "Ошибка подключения к аудиосерверу.";
+  }
+}
+
+play.addEventListener("click", async () => {
+  if (!tracks.length) return;
+
+  if (audio.paused) {
+    await startPlayback();
+  } else {
+    audio.pause();
+  }
+});
+
+previous.addEventListener("click", () => {
+  selectTrack(currentIndex - 1, true);
+});
+
+next.addEventListener("click", () => {
+  selectTrack(currentIndex + 1, true);
+});
+
+document.getElementById("back").addEventListener("click", () => {
+  audio.currentTime = Math.max(0, audio.currentTime - 15);
+});
+
+document.getElementById("forward").addEventListener("click", () => {
+  audio.currentTime = Math.min(
+    Number.isFinite(audio.duration)
+      ? audio.duration
+      : Infinity,
+    audio.currentTime + 15
+  );
+});
+
+seek.addEventListener("input", () => {
+  if (
+    Number.isFinite(audio.duration) &&
+    audio.duration > 0
+  ) {
+    audio.currentTime =
+      Number(seek.value) / 1000 * audio.duration;
+  }
+});
+
+document.getElementById("volume").addEventListener(
+  "input",
+  event => {
+    audio.volume = Number(event.target.value);
+  }
+);
+
+const speeds = [1, 1.25, 1.5, 1.75, 2, 0.75];
+let speedIndex = 0;
+
+document.getElementById("speedBtn").addEventListener(
+  "click",
+  () => {
+    speedIndex = (speedIndex + 1) % speeds.length;
+
+    audio.playbackRate = speeds[speedIndex];
+
+    document.getElementById("speed").textContent =
+      speeds[speedIndex] + "×";
+  }
+);
+
+[
+  "timeupdate",
+  "loadedmetadata",
+  "durationchange",
+  "play",
+  "pause",
+  "ended"
+].forEach(event => {
+  audio.addEventListener(event, updatePlayer);
+});
+
+audio.addEventListener("ended", () => {
+  if (currentIndex < tracks.length - 1) {
+    selectTrack(currentIndex + 1, true);
+  } else {
+    audio.currentTime = 0;
+    updatePlayer();
+  }
+});
+
+audio.addEventListener("error", () => {
+  if (audio.src) {
+    status.textContent = "Ошибка загрузки аудиозаписи.";
+  }
+});
+
+updateButtons();
+loadTracks();
+
+</script>
+
+</body>
+</html>
