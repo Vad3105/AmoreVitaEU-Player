@@ -169,6 +169,27 @@ input:focus-visible {
   text-align: center;
 }
 
+.telegram-invite {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border: 1px solid #f3a7bf55;
+  border-radius: 14px;
+  background: #ffffff0a;
+  text-align: center;
+  font-size: .85rem;
+  line-height: 1.5;
+  color: #e9d8e4;
+}
+.telegram-invite a {
+  display: inline-block;
+  margin-top: 8px;
+  color: #ffbad1;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.telegram-invite a:hover { color: #fff; }
+
 .foot {
   text-align: center;
   margin-top: 15px;
@@ -324,6 +345,15 @@ input:focus-visible {
 
   </div>
 
+  <div class="telegram-invite">
+    Нравятся разговоры о любви и отношениях?<br>
+    Присоединяйтесь к нашему сообществу знакомств и общения.
+    <br>
+    <a href="https://t.me/AmoreVitaEU" target="_blank" rel="noopener noreferrer">
+      ♥ Перейти в Telegram-канал AmoreVitaEU
+    </a>
+  </div>
+
   <div class="foot">
     © AmoreVitaEU · Слушайте с удовольствием
   </div>
@@ -341,8 +371,7 @@ input:focus-visible {
   GET /api/stream/имя-файла.mp3
 */
 
-const API_BASE =
-  "http://p7xuudvh7dm46uoo5cixuxzw.31.70.78.94.sslip.io";
+const API_BASE = "https://audio.amorevitaeu.appserver24.de";
 
 const audio = document.getElementById("audio");
 const play = document.getElementById("play");
