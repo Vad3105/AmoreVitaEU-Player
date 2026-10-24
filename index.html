@@ -237,6 +237,17 @@ input:focus-visible {
   color: #f3a7bf;
   min-width: 22px;
 }
+
+/* Обновлённая шапка и обложка AmoreVitaEU */
+.brand-link { display: block; text-decoration: none; cursor: pointer; }
+.brand-link:hover { color: #fff; }
+.tag { line-height: 1.5; }
+.cover { position: relative; overflow: hidden; aspect-ratio: 1.8; background: #5b2d48; }
+.cover-image { display: block; width: 100%; height: 100%; object-fit: cover; }
+h1 { font-size: clamp(1.13rem, 4.5vw, 1.35rem); line-height: 1.3; overflow-wrap: break-word; }
+.now-playing { margin: 0 0 10px; font-size: .76rem; color: #e7c1d0; line-height: 1.4; }
+.now-playing span { display: block; color: #fff; font-weight: 600; font-size: .85rem; margin-top: 3px; }
+@media (max-width: 480px) { .card { padding: 20px; } .controls { gap: 9px; } .cover { aspect-ratio: 1.6; } }
 </style>
 </head>
 
@@ -244,15 +255,14 @@ input:focus-visible {
 
 <main class="card">
 
-  <div class="brand">AmoreVitaEU</div>
+  <a class="brand brand-link" href="https://t.me/AmoreVitaEU" target="_blank" rel="noopener noreferrer" title="Открыть Telegram-канал AmoreVitaEU">AmoreVitaEU ♥ ↗</a>
 
   <div class="tag">
-    О любви, отношениях и совместимости
+    Знакомимся. Познаём себя. Учимся любить.
   </div>
 
   <div class="cover" aria-label="Обложка подкаста">
-    <div class="heart">♥</div>
-    <span>Подкасты о любви</span>
+    <img src="cover.jpg" alt="AmoreVitaEU — подкасты о любви" class="cover-image">
   </div>
 
   <p class="eyebrow">Аудиоподкаст</p>
@@ -261,9 +271,7 @@ input:focus-visible {
     Загрузка подкастов...
   </h1>
 
-  <p class="desc">
-    Разговор о чувствах, отношениях и взаимопонимании.
-  </p>
+  <p class="desc">Подкасты о любви, отношениях и взаимопонимании.</p>
 
   <audio
     id="audio"
@@ -271,6 +279,8 @@ input:focus-visible {
     controlsList="nodownload"
     disablePictureInPicture>
   </audio>
+
+  <div class="now-playing">Сейчас звучит <span id="shortTitle">Подкаст AmoreVitaEU</span></div>
 
   <input
     class="progress"
@@ -379,6 +389,7 @@ const seek = document.getElementById("seek");
 const status = document.getElementById("status");
 const trackTitle = document.getElementById("trackTitle");
 const trackList = document.getElementById("trackList");
+const shortTitle = document.getElementById("shortTitle");
 const previous = document.getElementById("previous");
 const next = document.getElementById("next");
 
@@ -423,6 +434,14 @@ function updatePlayer() {
   );
 }
 
+function displayTitle(track) {
+  const raw = (track.title || "").replace(/_/g, " ").trim();
+  if (/pochemu.*vybiraem.*nepodhodyashchih.*partnerov/i.test(raw)) {
+    return "Почему мы выбираем неподходящих партнёров?";
+  }
+  return raw || "Подкаст AmoreVitaEU";
+}
+
 function renderPlaylist() {
   trackList.replaceChildren();
 
@@ -438,7 +457,7 @@ function renderPlaylist() {
     number.textContent = String(index + 1) + ".";
 
     const title = document.createElement("span");
-    title.textContent = track.title;
+    title.textContent = displayTitle(track);
 
     button.append(number, title);
 
@@ -469,7 +488,8 @@ function selectTrack(index, autoplay = false) {
 
   const track = tracks[currentIndex];
 
-  trackTitle.textContent = track.title;
+  trackTitle.textContent = displayTitle(track);
+  shortTitle.textContent = displayTitle(track);
 
   audio.src = new URL(track.url, API_BASE).href;
 
@@ -519,6 +539,7 @@ async function loadTracks() {
 
     if (tracks.length === 0) {
       trackTitle.textContent = "Подкасты пока не добавлены";
+      shortTitle.textContent = "Ожидаем новые выпуски";
       trackList.textContent = "Аудиозаписей пока нет.";
       status.textContent = "";
       updateButtons();
@@ -531,6 +552,7 @@ async function loadTracks() {
     console.error("AmoreVitaEU API:", error);
 
     trackTitle.textContent = "Подкасты временно недоступны";
+    shortTitle.textContent = "Не удалось загрузить выпуск";
 
     trackList.textContent =
       "Не удалось получить список подкастов.";
