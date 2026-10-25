@@ -423,6 +423,39 @@ const next = document.getElementById("next");
 let tracks = [];
 let currentIndex = 0;
 
+// Запоминаем прогресс каждого подкаста в этом браузере.
+const PROGRESS_PREFIX = "amorevitaeu:progress:";
+let lastProgressSave = 0;
+
+function progressKey(track) {
+  return PROGRESS_PREFIX + track.url;
+}
+
+function saveProgress() {
+  const track = tracks[currentIndex];
+  if (!track || !Number.isFinite(audio.currentTime) || audio.currentTime <= 0) return;
+  try {
+    localStorage.setItem(progressKey(track), String(audio.currentTime));
+  } catch (error) {
+    // В приватном режиме хранилище может быть недоступно.
+  }
+}
+
+function restoreProgress(track) {
+  try {
+    const saved = Number(localStorage.getItem(progressKey(track)));
+    if (Number.isFinite(saved) && saved > 0 &&
+        Number.isFinite(audio.duration) && audio.duration > 0) {
+      // Не возвращаемся в последние секунды уже прослушанного выпуска.
+      if (saved < audio.duration - 5) {
+        audio.currentTime = Math.min(saved, audio.duration - 1);
+      }
+    }
+  } catch (error) {
+    // Без доступа к хранилищу плеер работает как прежде.
+  }
+}
+
 const fmt = seconds => {
   if (!Number.isFinite(seconds)) return "0:00";
 
@@ -465,6 +498,9 @@ function displayTitle(track) {
   const raw = (track.title || "").replace(/_/g, " ").trim();
   if (/pochemu.*vybiraem.*nepodhodyashchih.*partnerov/i.test(raw)) {
     return "Почему мы выбираем неподходящих партнёров?";
+  }
+  if (/pochemu.*perepiska.*podmenyaet.*realnuyu.*blizost/i.test(raw)) {
+    return "Почему переписка подменяет реальную близость";
   }
   return raw || "Подкаст AmoreVitaEU";
 }
@@ -511,6 +547,8 @@ async function startPlayback() {
 function selectTrack(index, autoplay = false) {
   if (index < 0 || index >= tracks.length) return;
 
+  // Сохраняем позицию предыдущего выпуска до смены аудиофайла.
+  saveProgress();
   currentIndex = index;
 
   const track = tracks[currentIndex];
@@ -660,8 +698,31 @@ document.getElementById("speedBtn").addEventListener(
   audio.addEventListener(event, updatePlayer);
 });
 
+// После загрузки метаданных возвращаем сохранённую позицию.
+audio.addEventListener("loadedmetadata", () => {
+  const track = tracks[currentIndex];
+  if (track) restoreProgress(track);
+  updatePlayer();
+});
+
+// Сохраняем во время прослушивания и при закрытии страницы.
+audio.addEventListener("timeupdate", () => {
+  if (Date.now() - lastProgressSave >= 2000) {
+    saveProgress();
+    lastProgressSave = Date.now();
+  }
+});
+audio.addEventListener("pause", saveProgress);
+window.addEventListener("pagehide", saveProgress);
+
 audio.addEventListener("ended", () => {
+  // Завершённый выпуск при следующем запуске начинается сначала.
+  const finished = tracks[currentIndex];
+  if (finished) {
+    try { localStorage.removeItem(progressKey(finished)); } catch (error) {}
+  }
   if (currentIndex < tracks.length - 1) {
+    audio.currentTime = 0;
     selectTrack(currentIndex + 1, true);
   } else {
     audio.currentTime = 0;
