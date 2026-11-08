@@ -510,6 +510,9 @@ function displayTitle(track) {
   if (/pochemu.*perepiska.*podmenyaet.*realnuyu.*blizost/i.test(raw)) {
     return "Почему переписка подменяет реальную близость?";
   }
+  if (/pochemu.*babochki.*v.*zhivote.*eto.*trevoga/i.test(raw)) {
+    return "Почему бабочки в животе — это тревога?";
+  }
   return raw || "Подкаст AmoreVitaEU";
 }
 
